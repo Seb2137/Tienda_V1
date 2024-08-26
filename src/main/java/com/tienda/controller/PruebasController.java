@@ -82,9 +82,5 @@ public class PruebasController {
        model.addAttribute("precioSup", precioSup);
        return "/pruebas/listado2";
    }
-   
-   
-   
-     
-   
+    
 }

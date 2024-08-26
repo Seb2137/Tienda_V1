@@ -5,6 +5,7 @@
 package com.tienda.controller;
 
 import com.tienda.domain.Usuario;
+import com.tienda.service.FirebaseStorageService;
 import com.tienda.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,23 +35,23 @@ public String usuarioNuevo(Usuario usuario) {
     return "usuario/modifica";
 }
 
-//@Autowired
-//private FirebaseStorageService firebaseStorageService;
-//
-//@PostMapping("/guardar") 
-//public String usuarioGuardar(Usuario usuario,
-//        @RequestParam("imagenFiles") MultipartFile imagenFile) {
-//    if (!imagenFile.isEmpty()) {
-//        usuarioService.save(usuario, false);
-//        usuario.setRutaImagen(
-//                firebaseStorageService.cargaImagen(
-//                        imagenFile,
-//                        "usuario",
-//                        usuario.getIdUsuario()));
-//    }
-//usuarioService.save(usuario, true);
-//return "redirect:/usuario/listado";
-//}
+@Autowired
+private FirebaseStorageService firebaseStorageService;
+
+@PostMapping("/guardar") 
+public String usuarioGuardar(Usuario usuario,
+        @RequestParam("imagenFiles") MultipartFile imagenFile) {
+    if (!imagenFile.isEmpty()) {
+        usuarioService.save(usuario, false);
+        usuario.setRutaImagen(
+                firebaseStorageService.cargaImagen(
+                        imagenFile,
+                        "usuario",
+                        usuario.getIdUsuario()));
+    }
+usuarioService.save(usuario, true);
+return "redirect:/usuario/listado";
+}
 
 @GetMapping("/eliminar/{idUsuario}")
 public String usuarioEliminar(Usuario usuario) {
